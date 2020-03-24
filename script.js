@@ -1,13 +1,17 @@
+/*
+Auteur / Author : Bertrand Fournel
+Github : https://github.com/bertrandfournel
+Script écrit le 24 mars 2020 (durant le confinement à cause du covid-19), au fait, je recherche un travail comme développeur.
+Written the 24th march 2020 (during the containment due to covid-19) and i'm looking for job :)
+
+*/
+
+
+
 window.onload = function(){
     var sun = document.getElementById("sun");
     var text = document.getElementById("text");
     
-    
-    
-    
-    console.log("hello");
-
-
     let nowTime = new Date();
     // On récupère le timestamp d'aujourd'hui en format number
     let timestampNow = Date.parse(nowTime);
@@ -21,13 +25,6 @@ window.onload = function(){
     // On convertit l'heure de maintenant en chaîne de caractères
     let nowTimeStr = nowTime.getHours() + ' h ' + nowTime.getMinutes();
     
-
-
-    
-    
-    
-
-
     navigator.geolocation.getCurrentPosition(success, error);
     function success(pos){
         let lat = pos.coords.latitude;
@@ -35,28 +32,57 @@ window.onload = function(){
 
         // On injecte les données pour maintenant en fonction de la position du l'utilisateur
         let timesToday = SunCalc.getTimes(nowTime, lat, long);
+        // On convertit en chaîne de caratères l'heure du lever de soleil d'aujourd'hui
+        let sunriseStrToday = timesToday.sunrise.getHours() + ' h ' + timesToday.sunrise.getMinutes();
         // On convertit en chaîne de caratères l'heure du coucher de soleil d'aujourd'hui
-        let sunsetStr = timesToday.sunset.getHours() + ' h ' + timesToday.sunset.getMinutes();
+        let sunsetStrToday = timesToday.sunset.getHours() + ' h ' + timesToday.sunset.getMinutes();
         
 
         // On injecte les données pour demain en fonction de la position du l'utilisateur
         let timesTomorrow = SunCalc.getTimes(nowTime, lat, long);
-        // On convertit en chaîne de caratères l'heure du lever de soleil de demain
-        let sunriseStr = timesTomorrow.sunrise.getHours() + ' h ' + timesTomorrow.sunrise.getMinutes();
-        console.log(timesToday);
+        // On convertit en chaîne de caractères l'heure du lever de soleil de demain
+        let sunriseStrTomorrow = timesTomorrow.sunrise.getHours() + ' h ' + timesTomorrow.sunrise.getMinutes();
+        
+        
+        
+        // Maintenant on cherche à placer le soleil sur le graphique, d'abord on convertit le temps entre le lever et le couché en minutes
+        let totalMinutes = ((timesToday.sunset.getHours() - timesToday.sunrise.getHours()) * 60) + (timesToday.sunrise.getMinutes());
+
+        // On cherche maitenant le nombre de minutes depuis le lever jusqu'à maintenant
+        let minutesSinceSunrise = ((nowTime.getHours() - timesToday.sunrise.getHours()) * 60) + (nowTime.getMinutes() - timesToday.sunrise.getMinutes());
+        
+        // On récupère le coefficient qui décrit le rapport entre le durée totale du jour et la durée depuis le lever du soleil
+        if (minutesSinceSunrise == 0){
+            minutesSinceSunrise = 1; //On rajoute une minute pour éviter l'erreur de la division par zéro, l'écart sera négligeable.
+        }
+        let coeff = totalMinutes / minutesSinceSunrise;
+
+        //On défini les positions du soleil avec le coefficient obtenu et un peu de trigonométrie, en se basant sur le canvas SVG.
+        if (coeff == 0){
+            coeff = 1;
+        }
+        let posXSun = 200 + Math.cos(Math.PI/coeff) * 200;
+        let posYSun = 300 - ((Math.sin(Math.PI/coeff))*200)
+        console.log(Math.sin(Math.PI/coeff))
+
+        // Enfin, on met en forme avec les valeurs obtenues
+        sun.setAttribute("cx", posXSun);
+        sun.setAttribute("cy", posYSun);
+        console.log(posYSun)
+
+        // Dernière étape, il faut trouver le temps restant avant le coucher du soleil
+        // Trouver le temps restant en minutes :
+        let minutesRemaining = totalMinutes - minutesSinceSunrise;
+        // Puis Convertir :
+        let timeRemainingInMilliseconds = minutesRemaining * 60 * 1000;
+        
+        
+        sun.setAttribute("fill", "white");
+        text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ", demain, il se lèvera à " + sunriseStrTomorrow + ".";
     }
 
     function error(err){
-        sun.setAttribute("fill", "transparent");
         text.innerHTML = "Vous n'autorisez pas la géolocalisation... C'est pas très grave, mais c'est un peu dommage...";
     }
-
-    
-    
-
-    
-
-    
-    
 
 }

@@ -2,7 +2,7 @@
 Auteur / Author : Bertrand Fournel
 Github : https://github.com/bertrandfournel
 Script écrit le 24 mars 2020 (durant le confinement à cause du covid-19), au fait, je recherche un travail comme développeur.
-Written the 24th march 2020 (during the containment due to covid-19) and i'm looking for job :)
+Written the 24th march 2020 (during the containment due to covid-19) and I'm looking for job :)
 
 */
 

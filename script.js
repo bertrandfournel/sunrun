@@ -72,13 +72,11 @@ window.onload = function(){
 
         // Dernière étape, il faut trouver le temps restant avant le coucher du soleil
         // Trouver le temps restant en minutes :
-        let minutesRemaining = totalMinutes - minutesSinceSunrise;
-        // Puis Convertir :
-        let timeRemainingInMilliseconds = minutesRemaining * 60 * 1000;
+        let timeRemainingStr = (timesToday.sunset.getHours() - nowTime.getHours()) + " heures et " + (timesToday.sunset.getMinutes() - nowTime.getMinutes()) + " minutes"; 
         
         
         sun.setAttribute("fill", "white");
-        text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ", demain, il se lèvera à " + sunriseStrTomorrow + ".";
+        text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ", demain, il se lèvera à " + sunriseStrTomorrow + ". Il reste "+timeRemainingStr+" de soleil aujourd'hui.";
     }
 
     function error(err){

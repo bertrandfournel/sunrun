@@ -2,16 +2,9 @@ body{
     background-color: black;
     font-family: 'Roboto Mono', monospace;
     color: #FFF;
-}
-
-.main{
-    width: 500px;
-    margin: auto;
-}
-
-p, h1{
     text-align: center;
 }
+
 
 
 

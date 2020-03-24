@@ -1,5 +1,8 @@
 window.onload = function(){
     var sun = document.getElementById("sun");
+    var text = document.getElementById("text");
+    
+    
     
     
     console.log("hello");
@@ -17,43 +20,43 @@ window.onload = function(){
 
     // On convertit l'heure de maintenant en chaîne de caractères
     let nowTimeStr = nowTime.getHours() + ' h ' + nowTime.getMinutes();
-    let nowTimeHoursStr = nowTime.getHours()
-    let nowTimeMinutesStr = nowTime.getMinutes()
-
-    // On injecte les données pour maintenant en fonction de la position du l'utilisateur
-    let timesToday;
-
-
-    // On injecte les données pour demain en fonction de la position du l'utilisateur
-    let timesTomorrow;
-
-
-    // On convertit en chaîne de caratères l'heure du coucher de soleil d'aujourd'hui
-    let sunsetStr;
-    sunsetStr = timesToday.sunset.getHours() + ' h ' + timesToday.sunset.getMinutes();
-
-    // On convertit en chaîne de caratères l'heure du lever de soleil de demain
-    let sunriseStr;
-    sunriseStr = timesTomorrow.sunrise.getHours() + ' h ' + timesTomorrow.sunrise.getMinutes();
-    let lat;
-    let long;
     
 
 
-    navigator.geolocation.getCurrentPosition(success);
+    
+    
+    
+
+
+    navigator.geolocation.getCurrentPosition(success, error);
     function success(pos){
-        lat = pos.coords.latitude;
-        long = pos.coords.longitude;
-        timesToday = SunCalc.getTimes(nowTime, lat, long);
-        timesTomorrow = SunCalc.getTimes(tomorrowTime, lat, long);
-        sunsetStr = timesToday.sunset.getHours() + ' h ' + timesToday.sunset.getMinutes();
-        sunriseStr = timesTomorrow.sunrise.getHours() + ' h ' + timesTomorrow.sunrise.getMinutes();
+        let lat = pos.coords.latitude;
+        let long = pos.coords.longitude;
+
+        // On injecte les données pour maintenant en fonction de la position du l'utilisateur
+        let timesToday = SunCalc.getTimes(nowTime, lat, long);
+        // On convertit en chaîne de caratères l'heure du coucher de soleil d'aujourd'hui
+        let sunsetStr = timesToday.sunset.getHours() + ' h ' + timesToday.sunset.getMinutes();
+        
+
+        // On injecte les données pour demain en fonction de la position du l'utilisateur
+        let timesTomorrow = SunCalc.getTimes(nowTime, lat, long);
+        // On convertit en chaîne de caratères l'heure du lever de soleil de demain
+        let sunriseStr = timesTomorrow.sunrise.getHours() + ' h ' + timesTomorrow.sunrise.getMinutes();
+        console.log(timesToday);
     }
+
+    function error(err){
+        sun.setAttribute("fill", "transparent");
+        text.innerHTML = "Vous n'autorisez pas la géolocalisation... C'est pas très grave, mais c'est un peu dommage...";
+    }
+
+    
     
 
     
 
     
-    */
+    
 
 }

@@ -73,14 +73,34 @@ window.onload = function(){
 
         // Dernière étape, il faut trouver le temps restant avant le coucher du soleil
         // Trouver le temps restant en minutes :
+        let timeRemainingStr = "";
         let minutesRemaining = totalMinutes - minutesSinceSunrise;
-        // Puis Convertir :
+        // Puis Convertir et mettre en forme la phrase de conclusion:
+        if (minutesRemaining > 60){
+            if (minutesRemaining % 60 == 0){
+                timeRemainingStr = "Il reste " + (minutesRemaining / 60) + " minutes de soleil."
+            }else if(minutesRemaining < 120){
+                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heure et " +(minutesRemaining % 60) + " minutes de soleil." / 60
+            }else{
+                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heures et " +(minutesRemaining % 60) + " minutes de soleil." / 60
+            }
+        }else if(minutesRemaining == 60){
+            timeRemainingStr = "Il reste 1 heure de soleil.";
+        }else if(minutesRemaining < 60 && minutesRemaining > 0){
+            if(minutesRemaining == 1){
+                timeRemainingStr = "Il reste 1 minute de soleil."
+            } else {
+                timeRemainingStr = "Il reste " + minutesRemaining + " minutes de soleil."
+            }
+        }else{
+            timeRemainingStr = "Le soleil est déjà couché."
+        }
         console.log(minutesRemaining)
         console.log(minutesSinceSunrise)
         
         
         sun.setAttribute("fill", "white");
-        text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ", demain, il se lèvera à " + sunriseStrTomorrow + ".";
+        text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ", demain, il se lèvera à " + sunriseStrTomorrow + ". " + timeRemainingStr;
     }
 
     function error(err){

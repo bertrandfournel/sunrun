@@ -80,9 +80,9 @@ window.onload = function(){
             if (minutesRemaining % 60 == 0){
                 timeRemainingStr = "Il reste " + (minutesRemaining / 60) + " minutes de soleil."
             }else if(minutesRemaining < 120){
-                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heure et " +(minutesRemaining % 60) + " minutes de soleil." / 60
+                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heure et " +(minutesRemaining % 60) + " minutes de soleil."
             }else{
-                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heures et " +(minutesRemaining % 60) + " minutes de soleil." / 60
+                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heures et " +(minutesRemaining % 60) + " minutes de soleil."
             }
         }else if(minutesRemaining == 60){
             timeRemainingStr = "Il reste 1 heure de soleil.";
@@ -95,12 +95,12 @@ window.onload = function(){
         }else{
             timeRemainingStr = "Le soleil est déjà couché."
         }
-        console.log(minutesRemaining)
-        console.log(minutesSinceSunrise)
+        
+        
         
         
         sun.setAttribute("fill", "white");
-        text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ", demain, il se lèvera à " + sunriseStrTomorrow + ". " + timeRemainingStr;
+        text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ". " + timeRemainingStr;
     }
 
     function error(err){

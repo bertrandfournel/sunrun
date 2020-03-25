@@ -61,7 +61,7 @@ window.onload = function(){
         if (coeff == 0){
             coeff = 0.0001;
         }
-        let posXSun = 210 + (-(Math.cos(Math.PI/coeff))) * 210;
+        let posXSun = 220 + (-(Math.cos(Math.PI/coeff))) * 220;
         let posYSun = 300 - ((Math.sin(Math.PI/coeff))* 200);
         
         

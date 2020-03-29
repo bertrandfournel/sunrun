@@ -67,27 +67,30 @@ window.onload = function(){
         if (minutesSinceSunrise == 0){
             minutesSinceSunrise = 1; //On rajoute une minute pour éviter l'erreur de la division par zéro, l'écart sera négligeable.
         }
-        let coeff =  totalMinutes / minutesSinceSunrise;
+        let coeff =  minutesSinceSunrise / totalMinutes; // ou minutesSinceSunrise/ totalMinutes
+        console.log(totalMinutes)
+        console.log(minutesSinceSunrise)
         console.log(coeff)
-
+ 
         //On défini les positions du soleil avec le coefficient obtenu et un peu de trigonométrie, en se basant sur le canvas SVG.
         if (coeff == 0){
             coeff = 0.0001;
         }
 
-        let posXSun = 125 + (-(Math.cos(Math.PI/coeff))) * 125;
+        /* autre solution mais pas opérationelle
+        let posXSun = 50+(200*coeff) //125 + (-(Math.cos(Math.PI/coeff))) * 125;
         let posYSun = 150 - ((Math.sin(Math.PI/coeff))* 150);
+        */
         
-        
-
         // Enfin, on met en forme avec les valeurs obtenues
         ctx.beginPath();
-        ctx.arc(posXSun, posYSun, 10, 0, 2 * Math.PI);
+        ctx.translate(150,150);
+        ctx.rotate(Math.PI*coeff)
+        ctx.arc(-100, 0, 10, 0, 2 * Math.PI);
         ctx.fillStyle = "white";
         ctx.fill();
         
         
-
         // Dernière étape, il faut trouver le temps restant avant le coucher du soleil
         // Trouver le temps restant en minutes :
         let timeRemainingStr = "";
@@ -112,11 +115,6 @@ window.onload = function(){
         }else{
             timeRemainingStr = "Le soleil est déjà couché."
         }
-        
-        
-        
-        
-        
         text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ". " + timeRemainingStr;
     }
 

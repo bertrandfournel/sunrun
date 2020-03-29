@@ -14,11 +14,21 @@ window.onload = function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     
+    //Cercle de la course du soleil
     ctx.beginPath();
     ctx.arc(150, 150, 100, 0, 2 * Math.PI, true);
     ctx.strokeStyle = "white";
     ctx.stroke();
     ctx.closePath();
+
+    // Ligne d'horizon
+    ctx.beginPath();
+    ctx.moveTo(0, 150);
+    ctx.lineTo(300,150);
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+    ctx.closePath();
+
 
      
     
@@ -89,6 +99,8 @@ window.onload = function(){
         ctx.arc(-100, 0, 10, 0, 2 * Math.PI);
         ctx.fillStyle = "white";
         ctx.fill();
+
+
         
         
         // Dernière étape, il faut trouver le temps restant avant le coucher du soleil

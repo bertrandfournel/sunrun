@@ -11,6 +11,16 @@ Written the 24th march 2020 (during the containment due to covid-19) and I'm loo
 window.onload = function(){
     var sun = document.getElementById("sun");
     var text = document.getElementById("text");
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    
+    ctx.beginPath();
+    ctx.arc(150, 150, 100, 0, 2 * Math.PI, true);
+    ctx.strokeStyle = "white";
+    ctx.stroke();
+    ctx.closePath();
+
+     
     
     let nowTime = new Date();
     // On récupère le timestamp d'aujourd'hui en format number
@@ -46,6 +56,8 @@ window.onload = function(){
         
         
         // Maintenant on cherche à placer le soleil sur le graphique, d'abord on convertit le temps entre le lever et le couché en minutes
+        
+
         let totalMinutes = ((timesToday.sunset.getHours() - timesToday.sunrise.getHours()) * 60) + (timesToday.sunset.getMinutes() - timesToday.sunrise.getMinutes());
 
         // On cherche maitenant le nombre de minutes depuis le lever jusqu'à maintenant
@@ -55,20 +67,25 @@ window.onload = function(){
         if (minutesSinceSunrise == 0){
             minutesSinceSunrise = 1; //On rajoute une minute pour éviter l'erreur de la division par zéro, l'écart sera négligeable.
         }
-        let coeff = totalMinutes / minutesSinceSunrise;
+        let coeff =  totalMinutes / minutesSinceSunrise;
+        console.log(coeff)
 
         //On défini les positions du soleil avec le coefficient obtenu et un peu de trigonométrie, en se basant sur le canvas SVG.
         if (coeff == 0){
             coeff = 0.0001;
         }
-        let posXSun = 220 + (-(Math.cos(Math.PI/coeff))) * 220;
-        let posYSun = 300 - ((Math.sin(Math.PI/coeff))* 200);
+
+        let posXSun = 125 + (-(Math.cos(Math.PI/coeff))) * 125;
+        let posYSun = 150 - ((Math.sin(Math.PI/coeff))* 150);
         
         
 
         // Enfin, on met en forme avec les valeurs obtenues
-        sun.setAttribute("cx", posXSun);
-        sun.setAttribute("cy", posYSun);
+        ctx.beginPath();
+        ctx.arc(posXSun, posYSun, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "white";
+        ctx.fill();
+        
         
 
         // Dernière étape, il faut trouver le temps restant avant le coucher du soleil
@@ -99,7 +116,7 @@ window.onload = function(){
         
         
         
-        sun.setAttribute("fill", "white");
+        
         text.innerHTML = "Il est " + nowTimeStr + ", aujourd'hui, le soleil se lève à " + sunriseStrToday +" et se couche à " + sunsetStrToday + ". " + timeRemainingStr;
     }
 

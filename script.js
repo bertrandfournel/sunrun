@@ -72,15 +72,13 @@ window.onload = function(){
 
         // On cherche maitenant le nombre de minutes depuis le lever jusqu'à maintenant
         let minutesSinceSunrise = ((nowTime.getHours() - timesToday.sunrise.getHours()) * 60) + (nowTime.getMinutes() - timesToday.sunrise.getMinutes());
-        
+
         // On récupère le coefficient qui décrit le rapport entre le durée totale du jour et la durée depuis le lever du soleil
         if (minutesSinceSunrise == 0){
             minutesSinceSunrise = 1; //On rajoute une minute pour éviter l'erreur de la division par zéro, l'écart sera négligeable.
         }
         let coeff =  minutesSinceSunrise / totalMinutes; // ou minutesSinceSunrise/ totalMinutes
-        console.log(totalMinutes)
-        console.log(minutesSinceSunrise)
-        console.log(coeff)
+        
  
         //On défini les positions du soleil avec le coefficient obtenu et un peu de trigonométrie, en se basant sur le canvas SVG.
         if (coeff == 0){
@@ -112,9 +110,9 @@ window.onload = function(){
             if (minutesRemaining % 60 == 0){
                 timeRemainingStr = "Il reste " + (minutesRemaining / 60) + " minutes de soleil."
             }else if(minutesRemaining < 120){
-                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heure et " +(minutesRemaining % 60) + " minutes de soleil."
+                timeRemainingStr = "Il reste " + (Math.floor(minutesRemaining / 60)) + " heure et " +(minutesRemaining % 60) + " minutes de soleil."
             }else{
-                timeRemainingStr = "Il reste " + (Math.round(minutesRemaining / 60)) + " heures et " +(minutesRemaining % 60) + " minutes de soleil."
+                timeRemainingStr = "Il reste " + (Math.floor(minutesRemaining / 60)) + " heures et " +(minutesRemaining % 60) + " minutes de soleil."
             }
         }else if(minutesRemaining == 60){
             timeRemainingStr = "Il reste 1 heure de soleil.";
